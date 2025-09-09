@@ -27,4 +27,4 @@ def time_converter(time_str: str) -> str:
         hours = 12
     if hours > 12:
         hours -= 12
-    return f'{hours}:{minutes:02d}:{period}'
+    return f'{hours}:{minutes:02d} {period}'
