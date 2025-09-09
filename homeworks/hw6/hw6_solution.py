@@ -16,14 +16,15 @@ def motor_time(n: int) -> int:
 
 def time_converter(time_str: str) -> str:
 
-    hours, minutes = time_str.split(':')
-    hours = int(hours)
-    minutes = int(minutes)
-    if hours == 0:
-        return f'12:{minutes} a.m.'
+    time_parts = time_str.split(':')
+    hours = int(time_parts[0])
+    minutes = int(time_parts[1])
     if hours < 12:
-        return f'{hours}:{minutes} a.m.'
-    if hours == 12:
-        return f'12:{minutes} a.m.'
+        period = "a.m."
     else:
-        return f'{hours-12}:{minutes} a.m.'
+        period = "p.m."
+    if hours == 0:
+        hours = 12
+    if hours > 12:
+        hours -= 12
+    return f'{hours}:{minutes:02d}:{period}'
