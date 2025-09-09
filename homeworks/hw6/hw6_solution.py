@@ -22,7 +22,7 @@ def time_converter(time_str: str) -> str:
     if hours == 0:
         return f'12:{minutes} a.m.'
     if hours < 12:
-        return f'{hours} : {minutes} a.m.'
+        return f'{hours}:{minutes} a.m.'
     if hours == 12:
         return f'12:{minutes} a.m.'
     else:
