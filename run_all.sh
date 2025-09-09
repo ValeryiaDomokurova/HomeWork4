@@ -41,7 +41,7 @@ echo "$TARGETS"
 echo -e "\nRunning linters..."
 
 echo -e "\n- flake8"
-python -m flake8 .
+flake8 .
 
 echo -e "\n- mypy"
 mypy .
