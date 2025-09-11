@@ -57,3 +57,4 @@ echo -e "\n- Running pytest..."
 pytest "$TEST_FILE" -v --tb=short --disable-warnings
 
 echo -e "\nDone! Linters and tests passed (if no errors above)."
+
