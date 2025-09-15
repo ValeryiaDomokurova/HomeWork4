@@ -1,10 +1,10 @@
 import random
 
-secret_num = ''.join(random.sample('0123456789', 4))
+SECRET_NUM = ''.join(random.sample('0123456789', 4))
 print("Компьютер загадал число")
 
 while True:
-    gamer = input("Введи 4 цифры без повторений ")
+    gamer = input("Введи 4 цифры без повторений: ")
 
     if len(gamer) != 4 or not gamer.isdigit():
         print("Нужно ввести 4 цифры ")
@@ -14,19 +14,19 @@ while True:
         print("Цифры не должны повторяться ")
         continue
 
-    bulls = 0
+    BULLS = 0
     for i in range(4):
-        if gamer[i] == secret_num[i]:
-            bulls += 1
+        if gamer[i] == SECRET_NUM[i]:
+            BULLS += 1
 
-    cows = 0
+    COWS = 0
     for x in gamer:
-        if x in secret_num:
-            cows += 1
-    cows -= bulls
+        if x in SECRET_NUM:
+            COWS += 1
+    COWS -= BULLS
 
-    if bulls == 4:
-        print(f"Поздравляю! Ты угадал число {secret_num}!")
+    if BULLS == 4:
+        print(f"Поздравляю! Ты угадал число {SECRET_NUM}!")
         break
-    else:
-        print(f"Быки: {bulls} , Коровы: {cows}")
+
+    print(f"Быки: {BULLS} , Коровы: {COWS}")
