@@ -5,21 +5,22 @@ def generate_secret_number():
 
     return ''.join(random.sample('0123456789', 4))
 
-def check_guess(secret, guess):
 
-    BULLS = 0
-    COWS = 0
+def check_guess(secret, user_guess):
+
+    bulls_count = 0
+    cows_count = 0
 
     for i in range(4):
-        if guess[i] == secret[i]:
-            BULLS += 1
+        if user_guess[i] == secret[i]:
+            bulls_count += 1
 
-    for x in guess:
+    for x in user_guess:
         if x in secret:
-            COWS += 1
+            cows_count += 1
 
-    COWS -= BULLS
-    return BULLS, COWS
+    cows_count -= bulls_count
+    return bulls_count, cows_count
 
 
 if __name__ == "__main__":
@@ -37,10 +38,10 @@ if __name__ == "__main__":
             print("Цифры не должны повторяться!")
             continue
 
-        BULLS, COWS = check_guess(SECRET_NUM, guess)
+        res_bulls, res_cows = check_guess(SECRET_NUM, guess)
 
-        print(f"Быки: {BULLS}, Коровы: {COWS}")
+        print(f"Быки: {res_bulls}, Коровы: {res_cows}")
 
-        if BULLS == 4:
+        if res_bulls == 4:
             print(f"Поздравляем! Вы угадали число {SECRET_NUM}")
             break
