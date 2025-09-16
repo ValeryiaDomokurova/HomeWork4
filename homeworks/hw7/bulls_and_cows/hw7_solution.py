@@ -1,38 +1,47 @@
 import random
 
-SECRET_NUM = ''.join(random.sample('0123456789', 4))
 
-def play_game():
+def secret_number():
+
+    return ''.join(random.sample('0123456789', 4))
+
+
+def check_gamer(secret, gamer):
+
+    bulls = 0
+    cows = 0
+
+    for i in range(4):
+        if gamer[i] == secret[i]:
+            bulls += 1
+
+    for x in guess:
+        if x in secret:
+            cows += 1
+
+    cows -= bulls
+    return bulls, cows
+
+
+if __name__ == "__main__":
+    secret_num = secret_number()
     print("Компьютер загадал число")
 
     while True:
-        gamer = input("Введи 4 цифры без повторений: ")
+        guess = input("Введите 4 цифры без повторений: ")
 
-        if len(gamer) != 4 or not gamer.isdigit():
-            print("Нужно ввести 4 цифры ")
+        if len(guess) != 4 or not guess.isdigit():
+            print("Нужно ввести 4 цифры!")
             continue
 
-        if len(set(gamer)) != 4:
-            print("Цифры не должны повторяться ")
+        if len(set(guess)) != 4:
+            print("Цифры не должны повторяться!")
             continue
 
-        BULLS = 0
-        COWS = 0
+        bulls, cows = check_gamer(secret_num, guess)
 
-        for i in range(4):
-            if gamer[i] == SECRET_NUM[i]:
-                BULLS += 1
+        print(f"Быки: {bulls}, Коровы: {cows}")
 
-        for x in gamer:
-            if x in SECRET_NUM:
-                COWS += 1
-
-        COWS -= BULLS
-
-        if BULLS == 4:
-            print(f"Поздравляю! Ты угадал число {SECRET_NUM}!")
+        if bulls == 4:
+            print(f"Поздравляем! Вы угадали число {secret_num}")
             break
-
-        print(f"Быки: {BULLS} , Коровы: {COWS}")
-
-play_game()
