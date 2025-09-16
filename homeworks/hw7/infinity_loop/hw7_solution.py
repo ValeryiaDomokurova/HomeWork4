@@ -1,4 +1,5 @@
-def solution(a, b):
+def infinity_loop(a, b):
+
     if a == b:
         return False
 

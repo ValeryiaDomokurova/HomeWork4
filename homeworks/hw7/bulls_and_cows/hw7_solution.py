@@ -1,30 +1,29 @@
 import random
 
 
-def secret_number():
+def generate_secret_number():
 
     return ''.join(random.sample('0123456789', 4))
 
+def check_guess(secret, guess):
 
-def check_gamer(secret, gamer):
-
-    bulls = 0
-    cows = 0
+    BULLS = 0
+    COWS = 0
 
     for i in range(4):
-        if gamer[i] == secret[i]:
-            bulls += 1
+        if guess[i] == secret[i]:
+            BULLS += 1
 
     for x in guess:
         if x in secret:
-            cows += 1
+            COWS += 1
 
-    cows -= bulls
-    return bulls, cows
+    COWS -= BULLS
+    return BULLS, COWS
 
 
 if __name__ == "__main__":
-    secret_num = secret_number()
+    SECRET_NUM = generate_secret_number()
     print("Компьютер загадал число")
 
     while True:
@@ -38,10 +37,10 @@ if __name__ == "__main__":
             print("Цифры не должны повторяться!")
             continue
 
-        bulls, cows = check_gamer(secret_num, guess)
+        BULLS, COWS = check_guess(SECRET_NUM, guess)
 
-        print(f"Быки: {bulls}, Коровы: {cows}")
+        print(f"Быки: {BULLS}, Коровы: {COWS}")
 
-        if bulls == 4:
-            print(f"Поздравляем! Вы угадали число {secret_num}")
+        if BULLS == 4:
+            print(f"Поздравляем! Вы угадали число {SECRET_NUM}")
             break
