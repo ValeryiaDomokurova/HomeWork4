@@ -7,6 +7,6 @@ def ascending_sequence(arr):
             if count > 1:
                 return False
 
-            if i > 1 > len(arr) - 1 and arr[i] <= arr[i - 2] and arr[i + 1] <= arr[i - 1]:
+            if 1 < i < len(arr) - 1 and arr[i] <= arr[i - 2] and arr[i + 1] <= arr[i - 1]:
                 return False
     return True
