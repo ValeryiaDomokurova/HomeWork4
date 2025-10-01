@@ -21,10 +21,10 @@ def test_user_can_open_bank_deposit(client_id, name, balance, year, expected):
     assert bank.register_client(client_id=client_id, name=name), "Expected new customer can open bank account"
     assert bank.open_deposit_account(client_id=client_id, start_balance=balance, years=year), \
         "Expected that customer can open a deposit in bank "
+
     assert bank.calc_interest_rate(client_id=client_id) == expected, \
         f"Expected to have '{expected}' after {year} year"
     assert bank.close_deposit(client_id=client_id) == expected, "Expected that existing customer can close deposit"
-
 
 @pytest.mark.parametrize("client_id,name,expected", [
     ("007", "James Bond", False),
