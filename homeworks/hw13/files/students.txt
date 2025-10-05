@@ -1,3 +1,0 @@
-Total students: 4
- Group 1: 2 students, middle mark: 81.5
- Group 2: 2 students, middle mark: 89.0
