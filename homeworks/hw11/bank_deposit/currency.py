@@ -1,7 +1,9 @@
 from homeworks.hw11.bank_deposit.bank import Bank
 
+
 class CurrencyConverter(Bank):
     def __init__(self, rates=None):
+        super().__init__()
         if rates is None:
             self.rates = {'USD': 3.2677, 'EUR': 3.399, 'BYN': 1.0}
         else:
@@ -19,8 +21,3 @@ class CurrencyConverter(Bank):
         else:
             result = amount_in_byn / self.rates[to_curr]
         return (round(result, 2), to_curr)
-
-class Person:
-    def __init__(self, currency, amount):
-        self.currency = currency
-        self.amount = amount
