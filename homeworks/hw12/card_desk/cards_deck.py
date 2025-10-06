@@ -21,8 +21,8 @@ class CardsDeck:
                 new_card = Card(number, mast)
                 self.cards.append(new_card)
 
-        self.cards.append(Card(mast = "Black", number = "Joker"))
-        self.cards.append(Card(mast = "Red", number =  "Joker"))
+        self.cards.append(Card(mast="Black", number="Joker"))
+        self.cards.append(Card(mast="Red", number="Joker"))
 
         print(f"There are {len(self.cards)} cards in deck")
 
