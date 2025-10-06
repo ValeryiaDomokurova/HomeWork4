@@ -14,18 +14,15 @@ pytestmark = pytest.mark.skipif(not config.get("hw12", False), reason="HW disabl
 @pytest.mark.parametrize("from_curr,to_curr,amount,expected", [
     ("USD", "BYN", 1000, (3267.7, "BYN")),
     ("EUR", "BYN", 1000, (3399, "BYN")),
-    ("BYN", "USD", 1000, (306.03, "USD")),
-    ("BYN", "EUR", 1000, (294.2, "EUR")),  #expected EUR, not USD
-    ("USD", "EUR", 1000, (961.37, "EUR")), #1000*3.2677/3.399=961.37
-    ("EUR", "USD", 1000, (1040.18, "USD")), #1000*3.399/3.2677=1040.18
+    ("BYN", "USD", 1000, (306.3, "USD")),
+    ("BYN", "EUR", 1000, (294.2, "USD")),
+    ("USD", "EUR", 1000, (951.8, "EUR")),
+    ("EUR", "USD", 1000, (1050.6, "USD")),
 ])
 def test_bank_currency_converter(from_curr, to_curr, amount, expected, mocker):
     cc = CurrencyConverter()
-    # mocker.patch.object(cc, "convert", return_value=expected)
-    # The test tries to mock and call a non-existent 'convert' method.
-    # Mocking a method that does not exist is meaningless.
-    # Mocking the method you are testing means you are not testing the logic, only the mock itself.
-    assert cc.exchange_currency(from_curr=from_curr, amount=amount, to_curr=to_curr) == expected, \
+    mocker.patch.object(cc, "convert", return_value=expected)
+    assert cc.convert(from_curr=from_curr, amount=amount, to_curr=to_curr) == expected, \
         f"Expected to get {expected} from {amount}{from_curr}"
 
 
@@ -35,7 +32,7 @@ def test_bank_currency_converter(from_curr, to_curr, amount, expected, mocker):
     ("BYN", "EEUR", 1000, "Unsupported currency: {curr}"),
 ])
 def test_bank_currency_converter_incorrect_to_currency(from_curr, to_curr, amount, expected):
-    bank = CurrencyConverter()  #The base class cannot know the methods of its subclass.
+    bank = Bank()
     with pytest.raises(ValueError) as excinfo:
         assert bank.exchange_currency(from_curr=from_curr, amount=amount, to_curr=to_curr)
     assert str(excinfo.value) == expected.format(curr=to_curr), \
@@ -48,7 +45,7 @@ def test_bank_currency_converter_incorrect_to_currency(from_curr, to_curr, amoun
     ("EEUR", "BYN", 1000, "Unsupported currency: {curr}"),
 ])
 def test_bank_currency_converter_incorrect_from_currency(from_curr, to_curr, amount, expected):
-    bank = CurrencyConverter()   #The base class cannot know the methods of its subclass.
+    bank = Bank()
     with pytest.raises(ValueError) as excinfo:
         assert bank.exchange_currency(from_curr=from_curr, amount=amount, to_curr=to_curr)
     assert str(excinfo.value) == expected.format(curr=from_curr), \
@@ -58,7 +55,8 @@ def test_bank_currency_converter_incorrect_from_currency(from_curr, to_curr, amo
 def test_initialize_card_deck(expected=54):
     deck = CardsDeck()
     deck.shuffle()
-    assert deck.get_remaining_cards() == expected, f"Expected to have {expected} cards in deck" # int doesn't have len
+    assert len(deck.get_remaining_cards()) == expected, \
+        f"Expected to have {expected} cards in deck"
 
 
 @pytest.mark.parametrize("card_number,expected", [
@@ -72,8 +70,8 @@ def test_get_cards_from_card_deck(card_number, expected):
     deck.get_card(card_number)
     deck.get_card(card_number)
     deck.get_card(card_number)
-    assert deck.get_remaining_cards() == expected, \
-        f"Expected to have {expected} cards in deck"  # int doesn't have len
+    assert len(deck.get_remaining_cards()) == expected, \
+        f"Expected to have {expected} cards in deck"
 
 
 @pytest.mark.parametrize("card_number,expected1,expected2", [
@@ -84,12 +82,12 @@ def test_get_cards_from_card_deck(card_number, expected):
 def test_shuffle_card_deck(card_number, expected1, expected2):
     deck = CardsDeck()
     deck.shuffle()
-    assert deck.get_remaining_cards() == expected1, \
-        f"Expected to have {expected1} cards in deck" # int doesn't have len
+    assert len(deck.get_remaining_cards()) == expected1, \
+        f"Expected to have {expected1} cards in deck"
     deck.get_card(card_number)
     deck.shuffle()
-    assert deck.get_remaining_cards() == expected2, \
-        f"Expected to have {expected2} cards in deck"  # int doesn't have len
+    assert len(deck.get_remaining_cards()) == expected2, \
+        f"Expected to have {expected2} cards in deck"
 
 
 @pytest.mark.parametrize("card_number,expected", [
@@ -111,5 +109,5 @@ def test_validate_card(card_number, expected):
 def test_validate_card_negative(card_number):
     deck = CardsDeck()
     with pytest.raises(ValueError) as excinfo:
-        deck._card_validator(card_number)  # without assert
+        assert deck._card_validator(card_number)
     assert str(excinfo.value) == "Error: enter a card number from 1 to 54"

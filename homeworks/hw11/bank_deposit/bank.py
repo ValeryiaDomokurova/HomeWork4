@@ -1,6 +1,10 @@
+from homeworks.hw11.bank_deposit.currency import CurrencyConverter
+
+
 class Bank:
     def __init__(self):
         self.clients = {}
+        self.currency_converter = CurrencyConverter()
 
     def register_client(self, client_id, name):
         if client_id in self.clients:
@@ -42,3 +46,6 @@ class Bank:
         self.clients[client_id]["deposit"] = None
 
         return final_balance
+
+    def exchange_currency(self, from_curr, amount, to_curr):
+        return self.currency_converter.convert(from_curr, amount, to_curr)

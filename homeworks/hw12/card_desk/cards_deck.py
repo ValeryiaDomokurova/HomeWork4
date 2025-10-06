@@ -9,11 +9,6 @@ class Card:
         self.number = number
         self.mast = mast
 
-    def __str__(self):
-        if self.mast == "Joker":
-            return "Joker"
-        return f"{self.number} {self.mast}"
-
 
 class CardsDeck:
     def __init__(self):
@@ -26,8 +21,8 @@ class CardsDeck:
                 new_card = Card(number, mast)
                 self.cards.append(new_card)
 
-        self.cards.append(Card("", "Joker"))
-        self.cards.append(Card("", "Joker"))
+        self.cards.append(Card(mast = "Black", number = "Joker"))
+        self.cards.append(Card(mast = "Red", number =  "Joker"))
 
         print(f"There are {len(self.cards)} cards in deck")
 
@@ -36,17 +31,15 @@ class CardsDeck:
         print("The Card has been shuffled.")
 
     def get_card(self, index):
-        real_index = index - 1
+        valid_index = self._card_validator(index)
+        real_index = valid_index - 1
 
-        if 0 <= real_index < len(self.cards):
-            card = self.cards[real_index]
-            self.cards.pop(real_index)
-            return card
-        else:
-            return None
+        card = self.cards[real_index]
+        self.cards.pop(real_index)
+        return card
 
     def get_remaining_cards(self):
-        return len(self.cards)
+        return self.cards
 
     def _card_validator(self, index):
         if not isinstance(index, int):
