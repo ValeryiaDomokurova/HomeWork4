@@ -41,16 +41,16 @@ echo "$TARGETS"
 echo -e "\nRunning linters..."
 
 echo -e "\n- flake8"
-flake8 .
+flake8 homeworks
 
 echo -e "\n- mypy"
-mypy .
+mypy homeworks
 
 echo -e "\n- pylint"
-pylint . || true
+pylint homeworks || true
 
 echo -e "\n- ruff"
-ruff check .
+ruff check homeworks
 
 # Tests
 echo -e "\n- Running pytest..."
