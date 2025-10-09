@@ -1,20 +1,26 @@
 
 
 def validate_expression(expression):
-    valid_simbols = set("1234567890+-*/.()%")
+    cleaned_expression = expression.replace(" ", "")
+    if not cleaned_expression:
+        return False, "Syntax error in the expression."
+
+    valid_symbols = set("1234567890+-*/.()% ")
     for char in expression:
-        if char not in valid_simbols:
+        if char.isalpha():
             return False, char
 
-    if expression.count("(") != expression.count(")"):
+    for char in expression:
+        if char not in valid_symbols:
+            return False, char
+
+    if cleaned_expression.count("(") != cleaned_expression.count(")"):
         return False, "Syntax error in the expression."
+
     return True, None
 
 
 def evaluate_expression(expression):
-    if "abc" in expression:
-        return "Invalid char --> a"
-
     validation_result = validate_expression(expression)
     if not validation_result[0]:
         if validation_result[1] == "Syntax error in the expression.":
@@ -23,9 +29,10 @@ def evaluate_expression(expression):
             error_message = f"Invalid char --> {validation_result[1]}"
         return error_message
 
-# I've tried many options without eval, but this one is the most optimal and there is error
+    cleaned_expression = expression.replace(" ", "")
+
     try:
-        result = eval(expression)
+        result = eval(cleaned_expression)
         if isinstance(result, float) and result.is_integer():
             return int(result)
         return result
@@ -33,16 +40,3 @@ def evaluate_expression(expression):
         return "Division by zero."
     except SyntaxError:
         return "Syntax error in the expression."
-
-
-def calculator():
-    while True:
-        user_input = input("~").strip()
-        if user_input.lower() == "exit":
-            break
-
-        if not user_input:
-            continue
-
-        result = evaluate_expression(user_input)
-        print(f"Result: {result}")
