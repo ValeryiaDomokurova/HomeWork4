@@ -9,8 +9,3 @@ def get_club_with_most_wins(filename):
     best_clubs = [club for club in clubs if club['wins'] == max_wins]
 
     return best_clubs
-
-
-if __name__ == "__main__":
-    best_club = get_club_with_most_wins('clubs.json')
-    print(f"The best football clab: {best_club['name']} ({best_club['country']}) - {best_club['wins']} wins.")

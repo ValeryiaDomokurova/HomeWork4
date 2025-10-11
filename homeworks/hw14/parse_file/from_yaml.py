@@ -21,9 +21,3 @@ def read_books(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
         return data.get('books', []) if data else []
-
-
-if __name__ == "__main__":
-    books = read_books('books.yaml')
-    print(books)
-    add_book('Fluent Python', 'Luciano Ramalho', 2015, 'books.yaml')
