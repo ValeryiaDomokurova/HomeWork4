@@ -1,0 +1,10 @@
+books:
+- author: Yukihiro Matsumoto
+  title: Ruby in a Nutshell
+  year: 1998
+- author: Zed A. Shaw
+  title: Leann Ruby The Hard Way
+  year: 1932
+- author: Luciano Ramalho
+  title: Fluent Python
+  year: 2015
