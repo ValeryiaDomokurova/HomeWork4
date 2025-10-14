@@ -2,7 +2,7 @@ def sum_numbers():
     try:
         n = int(input("Enter a number: "))
         result = n * (n + 1) // 2
-        print(f"Сумма: {result}")
+        print(f"Amount: {result}")
         return result
     except ValueError:
         print("Error")

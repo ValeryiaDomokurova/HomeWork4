@@ -19,4 +19,4 @@ try:
 except AssertionError:
     print("Error")
 
-palindrome_check(int(input("Число: ")))
+palindrome_check(int(input("Number: ")))
