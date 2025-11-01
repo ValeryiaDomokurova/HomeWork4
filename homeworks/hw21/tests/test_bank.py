@@ -1,0 +1,118 @@
+import pytest
+import sys
+from loguru import logger
+
+logger.remove()
+logger.add(sys.stderr, level="INFO")
+
+from homeworks.hw21.source.bank.bank import Bank
+from homeworks.hw21.source.bank.currency import CurrencyConverter
+
+
+class TestCurrencyConverter:
+
+    @pytest.fixture
+    def converter(self):
+        logger.debug("Initializing currency converter")
+        return CurrencyConverter()
+
+    def test_convert_usd_by_byn(self, converter):
+        result = converter.convert("USD", 100, "BYN")
+        logger.info(f"Converted USD to BYN: {result}")
+        assert result == 326.77
+
+    def test_convert_byn_by_eur(self, converter):
+        result = converter.convert("BYN", 100, "EUR")
+        logger.info(f"Converted BYN to EUR: {result}")
+        assert result == 29.42
+
+    def test_convert_eur_by_usd(self, converter):
+        result = converter.convert("EUR", 100, "USD")
+        logger.info(f"Converted EUR to BYN: {result}")
+        assert result == 104.02
+
+    def test_convert_invalid_currency(self, converter):
+        with pytest.raises(ValueError):
+            converter.convert("RUB", 100)
+        logger.error("Invalid currency specified")
+
+class TestBank:
+
+    @pytest.fixture
+    def bank(self):
+        logger.debug("Initializing bank")
+        return Bank()
+
+    def test_register_new_client(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        result = bank.register_client(client_id, client_name)
+        logger.info("Client registered")
+        assert result is True
+
+    def test_register_client_already_registered(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        result = bank.register_client(client_id, client_name)
+        logger.info("Client already registered")
+        assert result is False
+
+    def test_open_deposit(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        result = bank.open_deposit_account("007", 1000, 1)
+        logger.info(f"Opened deposit: {result}")
+        assert result is True
+
+    def test_open_deposit_unregistered(self, bank):
+        result = bank.open_deposit_account("007", 1000, 1)
+        logger.info("Unregistered client")
+        assert result is False
+
+    def test_calc_interest_rate(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        bank.open_deposit_account("007", 1000, 1)
+        result = bank.calc_interest_rate("007")
+        logger.info(f"Calculated interest rate: {result}")
+        assert result == 1104.71
+
+    def test_calc_interest_rate_unregistered(self, bank):
+        result = bank.calc_interest_rate("007")
+        logger.info(f"Unregistered client")
+        assert result is False
+
+    def test_calc_interest_rate_no_deposit(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        result = bank.calc_interest_rate("007")
+        logger.info("There isn't a open deposit")
+        assert result is False
+
+    def test_close_deposit(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        bank.open_deposit_account("007", 1000, 1)
+        expected = bank.calc_interest_rate("007")
+        result = bank.close_deposit(client_id)
+        logger.info("Deposit closed")
+        assert result == expected
+
+    def test_close_deposit_unregistered(self, bank):
+        result = bank.close_deposit("007")
+        logger.info(f"Unregistered client")
+        assert result is False
+
+    def test_close_deposit_no_deposit(self, bank):
+        client_id = "007"
+        client_name = "James Bond"
+        bank.register_client(client_id, client_name)
+        bank.close_deposit(client_id)
+        result = bank.close_deposit(client_id)
+        logger.info("There isn't a open deposit")
+        assert result is False
