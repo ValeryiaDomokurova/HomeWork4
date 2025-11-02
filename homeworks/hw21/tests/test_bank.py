@@ -116,3 +116,13 @@ class TestBank:
         result = bank.close_deposit(client_id)
         logger.info("There isn't a open deposit")
         assert result is False
+
+    def test_exchange_currency(self, bank):
+        result = bank.exchange_currency("USD", 100, "BYN")
+        logger.info(f"Exchanged currency: {result}")
+        assert result == 326.77
+
+    def test_exchange_currency_invalid(self, bank):
+        with pytest.raises(ValueError):
+            bank.exchange_currency("RUB", 100, "USD")
+        logger.error("Invalid currency for exchange")
