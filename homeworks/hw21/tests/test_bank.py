@@ -1,12 +1,11 @@
 import sys
 import pytest
 from loguru import logger
+from homeworks.hw21.source.bank.bank import Bank
+from homeworks.hw21.source.bank.currency import CurrencyConverter
 
 logger.remove()
 logger.add(sys.stderr, level="INFO")
-
-from homeworks.hw21.source.bank.bank import Bank
-from homeworks.hw21.source.bank.currency import CurrencyConverter
 
 
 class TestCurrencyConverter:
