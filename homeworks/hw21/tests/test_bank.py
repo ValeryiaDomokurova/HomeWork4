@@ -1,5 +1,5 @@
-import pytest
 import sys
+import pytest
 from loguru import logger
 
 logger.remove()
@@ -82,7 +82,7 @@ class TestBank:
 
     def test_calc_interest_rate_unregistered(self, bank):
         result = bank.calc_interest_rate("007")
-        logger.info(f"Unregistered client")
+        logger.info("Unregistered client")
         assert result is False
 
     def test_calc_interest_rate_no_deposit(self, bank):
@@ -105,7 +105,7 @@ class TestBank:
 
     def test_close_deposit_unregistered(self, bank):
         result = bank.close_deposit("007")
-        logger.info(f"Unregistered client")
+        logger.info("Unregistered client")
         assert result is False
 
     def test_close_deposit_no_deposit(self, bank):
