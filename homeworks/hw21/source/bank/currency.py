@@ -1,3 +1,4 @@
+# pylint: disable=R0801
 class CurrencyConverter():
     def __init__(self):
         self.rates = {'USD': 3.2677, 'EUR': 3.399, 'BYN': 1.0}

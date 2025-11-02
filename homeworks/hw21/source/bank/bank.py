@@ -1,3 +1,4 @@
+# pylint: disable=R0801
 from homeworks.hw11.bank_deposit.currency import CurrencyConverter
 
 
