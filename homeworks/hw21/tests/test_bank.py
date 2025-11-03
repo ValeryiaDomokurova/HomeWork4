@@ -1,11 +1,7 @@
-import sys
 import pytest
 from loguru import logger
 from homeworks.hw21.source.bank.bank import Bank
 from homeworks.hw21.source.bank.currency import CurrencyConverter
-
-logger.remove()
-logger.add(sys.stderr, level="INFO")
 
 
 class TestCurrencyConverter:
@@ -42,77 +38,63 @@ class TestBank:
         logger.debug("Initializing bank")
         return Bank()
 
-    def test_register_new_client(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        result = bank.register_client(client_id, client_name)
-        logger.info("Client registered")
-        assert result is True
-
-    def test_register_client_already_registered(self, bank):
+    @pytest.fixture
+    def client(self, bank):
         client_id = "007"
         client_name = "James Bond"
         bank.register_client(client_id, client_name)
-        result = bank.register_client(client_id, client_name)
+        logger.debug("Client registered")
+        return client_id
+
+    def test_register_new_client(self, bank, client):
+        assert client in bank.clients
+        logger.info("Client registered")
+
+    def test_register_client_already_registered(self, bank, client):
+        result = bank.register_client(client, "James Bond")
         logger.info("Client already registered")
         assert result is False
 
-    def test_open_deposit(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        bank.register_client(client_id, client_name)
-        result = bank.open_deposit_account("007", 1000, 1)
+    def test_open_deposit(self, bank, client):
+        result = bank.open_deposit_account(client, 1000, 1)
         logger.info(f"Opened deposit: {result}")
         assert result is True
 
     def test_open_deposit_unregistered(self, bank):
-        result = bank.open_deposit_account("007", 1000, 1)
+        result = bank.open_deposit_account("008", 1000, 1)
         logger.info("Unregistered client")
         assert result is False
 
-    def test_calc_interest_rate(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        bank.register_client(client_id, client_name)
-        bank.open_deposit_account("007", 1000, 1)
-        result = bank.calc_interest_rate("007")
+    def test_calc_interest_rate(self, bank, client):
+        bank.open_deposit_account(client, 1000, 1)
+        result = bank.calc_interest_rate(client)
         logger.info(f"Calculated interest rate: {result}")
         assert result == 1104.71
 
     def test_calc_interest_rate_unregistered(self, bank):
-        result = bank.calc_interest_rate("007")
+        result = bank.calc_interest_rate("008")
         logger.info("Unregistered client")
         assert result is False
 
-    def test_calc_interest_rate_no_deposit(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        bank.register_client(client_id, client_name)
-        result = bank.calc_interest_rate("007")
+    def test_calc_interest_rate_no_deposit(self, bank, client):
+        result = bank.calc_interest_rate(client)
         logger.info("There isn't a open deposit")
         assert result is False
 
-    def test_close_deposit(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        bank.register_client(client_id, client_name)
-        bank.open_deposit_account("007", 1000, 1)
-        expected = bank.calc_interest_rate("007")
-        result = bank.close_deposit(client_id)
+    def test_close_deposit(self, bank, client):
+        bank.open_deposit_account(client, 1000, 1)
+        expected = bank.calc_interest_rate(client)
+        result = bank.close_deposit(client)
         logger.info("Deposit closed")
         assert result == expected
 
     def test_close_deposit_unregistered(self, bank):
-        result = bank.close_deposit("007")
+        result = bank.close_deposit("008")
         logger.info("Unregistered client")
         assert result is False
 
-    def test_close_deposit_no_deposit(self, bank):
-        client_id = "007"
-        client_name = "James Bond"
-        bank.register_client(client_id, client_name)
-        bank.close_deposit(client_id)
-        result = bank.close_deposit(client_id)
+    def test_close_deposit_no_deposit(self, bank, client):
+        result = bank.close_deposit(client)
         logger.info("There isn't a open deposit")
         assert result is False
 

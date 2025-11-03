@@ -1,10 +1,6 @@
-import sys
 import pytest
 from loguru import logger
 from homeworks.hw21.source.library.book import Book
-
-logger.remove()
-logger.add(sys.stderr, level="INFO")
 
 
 class TestBook:
