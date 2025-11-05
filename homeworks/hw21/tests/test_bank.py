@@ -1,6 +1,6 @@
-import pytest
 import random
 import time
+import pytest
 from loguru import logger
 
 from homeworks.hw21.source.bank.bank import Bank

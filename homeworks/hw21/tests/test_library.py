@@ -1,7 +1,7 @@
 # pylint: disable=too-many-public-methods
-import pytest
 import random
 import time
+import pytest
 from loguru import logger
 from homeworks.hw21.source.library.book import Book
 
