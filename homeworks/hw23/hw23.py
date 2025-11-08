@@ -5,7 +5,7 @@ Login screen (https://www.saucedemo.com/)
 ~ Copy Username "standard_user" (selector [id="login_credentials"])
 ~ Enter the copied data (selector [name="user-name"])
 ~ Copy Password "secret_sauce" (selector [class=login_password])
-~ Enter the copied data (selector [name="user-name"])
+~ Enter the copied data (selector [name="password"])
 ~ Press the "Log in" button (selector [class="submit-button btn_action"])
 ~ Successfully navigated to the next page(https://www.saucedemo.com/inventory.html)
 
