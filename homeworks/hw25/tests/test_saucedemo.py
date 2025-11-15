@@ -7,7 +7,7 @@ from homeworks.hw25.pages.checkout_step_one_page import CheckoutStepOnePage
 from homeworks.hw25.pages.checkout_step_two_page import CheckoutStepTwoPage
 
 
-class TestSauсeDemo:
+class TestSauceDemo:
     def test_login(self, browser_page):
         page = browser_page
         login_page = LoginPage(page)
