@@ -1,4 +1,3 @@
-# pylint: disable=import-error,duplicate-code
 import pytest
 from playwright.sync_api import sync_playwright
 
@@ -9,6 +8,5 @@ def browser_page():
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
-        page.goto('https://www.saucedemo.com/')
         yield page
         browser.close()

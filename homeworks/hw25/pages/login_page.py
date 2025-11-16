@@ -1,4 +1,3 @@
-# pylint: disable=import-error
 from playwright.sync_api import Page
 from homeworks.hw25.pages.base_page import BasePage
 
