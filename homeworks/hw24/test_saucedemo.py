@@ -1,4 +1,3 @@
-# pylint: disable=import-error
 # pylint: disable=line-too-long
 import pytest
 from playwright.sync_api import sync_playwright, expect
