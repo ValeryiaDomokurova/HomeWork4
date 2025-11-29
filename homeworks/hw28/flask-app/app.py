@@ -1,5 +1,6 @@
-from flask import Flask, render_template
 import random
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
@@ -9,6 +10,7 @@ images = [
     "https://media.tenor.com/pOS38tUuVnQAAAAd/cat-meme.gif",
     "https://media.tenor.com/lQlIBQeeruwAAAAd/wanted-cat.gif"
     ]
+
 
 @app.route('/')
 def index():
